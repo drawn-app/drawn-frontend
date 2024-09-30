@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import { useState } from "react";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
@@ -10,23 +10,36 @@ import { CardContent } from "@/components/ui/card";
 
 // Define Zod schemas for validation
 const displayNameSchema = z.object({
-  displayName: z.string().min(1, { message: "Display name must be at least 1 characters" }).max(32, { message: "Display name cannot exceed 32 characters" }),
+  displayName: z
+    .string()
+    .min(1, { message: "Display name must be at least 1 characters" })
+    .max(32, { message: "Display name cannot exceed 32 characters" }),
 });
 
 const emailSchema = z.object({
   email: z.string().email({ message: "Invalid email address" }),
 });
 
-const passwordSchema = z.object({
-  password: z.string().min(8, { message: "Password must be at least 8 characters" }),
-  confirmPassword: z.string().min(8, { message: "Password confirmation must be at least 8 characters" }),
-}).refine((data) => data.password === data.confirmPassword, {
-  message: "Passwords do not match",
-  path: ["confirmPassword"],
-});
+const passwordSchema = z
+  .object({
+    password: z
+      .string()
+      .min(8, { message: "Password must be at least 8 characters" }),
+    confirmPassword: z
+      .string()
+      .min(8, {
+        message: "Password confirmation must be at least 8 characters",
+      }),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "Passwords do not match",
+    path: ["confirmPassword"],
+  });
 
 export default function ProfileEditingPage() {
-  const [avatar, setAvatar] = useState("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQpSYk_W83N2xJNEfhep2ia56pzsUI1ucsPZg&s");
+  const [avatar, setAvatar] = useState(
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQpSYk_W83N2xJNEfhep2ia56pzsUI1ucsPZg&s"
+  );
 
   const {
     register: registerDisplayName,
@@ -72,7 +85,8 @@ export default function ProfileEditingPage() {
 
   const handleImageUpload = (event) => {
     const file = event.target.files[0];
-    if (file && file.type.startsWith("image/")) { // Check if the file is an image
+    if (file && file.type.startsWith("image/")) {
+      // Check if the file is an image
       const imageUrl = URL.createObjectURL(file);
       setAvatar(imageUrl);
       // Clean up the memory
@@ -89,7 +103,6 @@ export default function ProfileEditingPage() {
   return (
     <div className="flex justify-center items-center min-h-screen h-screen">
       <form className="grid grid-cols-2 w-[800px] bg-white rounded-lg shadow-lg overflow-hidden">
-        
         {/* Left Section - Profile Pic */}
         <div className="flex flex-col justify-center items-center bg-gradient-to-r from-indigo-500 to-purple-500 p-8 text-white">
           <div className="relative w-24 h-24 mb-4">
@@ -123,14 +136,16 @@ export default function ProfileEditingPage() {
 
         {/* Right Section - Profile Details */}
         <CardContent className="p-8 bg-white space-y-8">
-
           <div className="flex justify-center">
             <h3 className="text-xl font-semibold">Edit Your Profile</h3>
           </div>
           {/* Change Display Name Section */}
           <div>
             <h3 className="text-xl font-semibold mb-2">Change Display Name</h3>
-            <Label htmlFor="displayName" className="text-sm font-semibold text-gray-600">
+            <Label
+              htmlFor="displayName"
+              className="text-sm font-semibold text-gray-600"
+            >
               Display Name
             </Label>
             <Input
@@ -140,23 +155,28 @@ export default function ProfileEditingPage() {
               {...registerDisplayName("displayName")}
             />
             {displayNameErrors.displayName && (
-              <p className="text-red-500">{displayNameErrors.displayName.message}</p>
+              <p className="text-red-500">
+                {displayNameErrors.displayName.message}
+              </p>
             )}
             <div className="flex justify-center m-2">
-                <Button
+              <Button
                 type="button"
                 onClick={handleSubmitDisplayName(onSubmitDisplayName)}
                 className="bg-indigo-500 text-white mt-2"
-                >
+              >
                 Change
-                </Button>
-                </div>
+              </Button>
+            </div>
           </div>
 
           {/* Change Email Section */}
-          <div>
+          {/* <div>
             <h3 className="text-xl font-semibold mb-2">Change Email</h3>
-            <Label htmlFor="email" className="text-sm font-semibold text-gray-600">
+            <Label
+              htmlFor="email"
+              className="text-sm font-semibold text-gray-600"
+            >
               Email
             </Label>
             <Input
@@ -165,22 +185,27 @@ export default function ProfileEditingPage() {
               placeholder="newExample@gmail.com"
               {...registerEmail("email")}
             />
-            {emailErrors.email && <p className="text-red-500">{emailErrors.email.message}</p>}
+            {emailErrors.email && (
+              <p className="text-red-500">{emailErrors.email.message}</p>
+            )}
             <div className="flex justify-center m-2">
-                <Button
+              <Button
                 type="button"
                 onClick={handleSubmitEmail(onSubmitEmail)}
                 className="bg-indigo-500 text-white mt-2"
-                >
+              >
                 Change
-                </Button>
+              </Button>
             </div>
-          </div>
+          </div> */}
 
           {/* Change Password Section */}
           <div>
             <h3 className="text-xl font-semibold mb-2">Change Password</h3>
-            <Label htmlFor="password" className="text-sm font-semibold text-gray-600">
+            <Label
+              htmlFor="password"
+              className="text-sm font-semibold text-gray-600"
+            >
               New Password
             </Label>
             <Input
@@ -188,9 +213,14 @@ export default function ProfileEditingPage() {
               type="password"
               {...registerPassword("password")}
             />
-            {passwordErrors.password && <p className="text-red-500">{passwordErrors.password.message}</p>}
+            {passwordErrors.password && (
+              <p className="text-red-500">{passwordErrors.password.message}</p>
+            )}
 
-            <Label htmlFor="confirmPassword" className="text-sm font-semibold text-gray-600 mt-2">
+            <Label
+              htmlFor="confirmPassword"
+              className="text-sm font-semibold text-gray-600 mt-2"
+            >
               Confirm New Password
             </Label>
             <Input
@@ -199,17 +229,19 @@ export default function ProfileEditingPage() {
               {...registerPassword("confirmPassword")}
             />
             {passwordErrors.confirmPassword && (
-              <p className="text-red-500">{passwordErrors.confirmPassword.message}</p>
+              <p className="text-red-500">
+                {passwordErrors.confirmPassword.message}
+              </p>
             )}
 
             <div className="flex justify-center m-2">
-                <Button
+              <Button
                 type="button"
                 onClick={handleSubmitPassword(onSubmitPassword)}
                 className="bg-indigo-500 text-white mt-2"
-                >
+              >
                 Change
-                </Button>
+              </Button>
             </div>
           </div>
         </CardContent>

@@ -1,6 +1,6 @@
-'use client'
+"use client";
 import { Button } from "@/components/ui/button";
-import { useRouter } from "next/navigation"
+import { useRouter } from "next/navigation";
 import { Card, CardContent } from "@/components/ui/card";
 
 export default function ProfilePage() {
@@ -28,7 +28,9 @@ export default function ProfilePage() {
           </div>
           <div className="grid grid-cols-1 gap-6 mb-8">
             <div>
-              <h4 className="text-sm font-semibold text-gray-600">Display Name</h4>
+              <h4 className="text-sm font-semibold text-gray-600">
+                Display Name
+              </h4>
               <p className="text-gray-800">The Nick Sorawit</p>
             </div>
             <div>
@@ -36,11 +38,13 @@ export default function ProfilePage() {
               <p className="text-gray-800">example@gmail.com</p>
             </div>
           </div>
-  
+
           <div className="flex justify-center">
-            <Button className="bg-indigo-500 text-white hover:bg-indigo-600 flex items-center"
-                    onClick={() => router.push("/profile/edit")}>
-                <span>Edit Profile</span>
+            <Button
+              className="bg-indigo-500 text-white hover:bg-indigo-600 flex items-center"
+              onClick={() => router.push("/profile/edit")}
+            >
+              <span>Edit Profile</span>
             </Button>
           </div>
         </div>

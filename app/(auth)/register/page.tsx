@@ -32,7 +32,7 @@ export default function RegisterPage() {
           <Input
             id="displayName"
             type="text"
-            placeholder="The Nick Sorawit"
+            placeholder="Display Name"
             required
           />
         </div>

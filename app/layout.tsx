@@ -5,6 +5,7 @@ import localFont from "next/font/local";
 import "./globals.css";
 import { useEffect } from "react";
 import { UserProvider } from "@/lib/hooks/UserContext";
+import { Toaster } from "@/components/ui/toaster";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -40,6 +41,7 @@ export default function RootLayout({
         >
           {children}
         </body>
+        <Toaster />
       </UserProvider>
     </html>
   );

@@ -3,7 +3,7 @@ export type Workspace = {
     name: string;
     description?: string;
     ownerId: string;
-    globalSharingType: string;
+    globalSharingType: "no" | "viewer" | "editor";
     createdAt: Date;
     updatedAt: Date;
 }

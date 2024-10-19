@@ -1,4 +1,4 @@
-import NavigationBar from "@/components/common/navigationBar";
+import NavigationBar from "@/components/common/nav/navigationBar";
 import WorkspaceTemplatePane from "@/components/common/workspaceTemplatePane";
 import WorkspaceSelectorPane from "@/components/common/workspaceSelectorPane";
 

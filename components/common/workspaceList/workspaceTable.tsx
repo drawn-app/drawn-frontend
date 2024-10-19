@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Table,
   TableBody,
@@ -9,6 +11,9 @@ import {
 } from "@/components/ui/table";
 
 import { Dropdown2 } from "@/components/common/dropDown2";
+import { Workspace } from "@/types/Workspace";
+import { useRouter } from "next/navigation";
+import { useUser } from "@/lib/hooks/UserContext";
 
 export interface WorkspaceTableProps {
   id: string;
@@ -17,9 +22,12 @@ export interface WorkspaceTableProps {
   editedDate: string;
 }
 
-function WorkspaceRow({ data }: { data: WorkspaceTableProps }) {
+function WorkspaceRow({ data }: { data: Workspace }) {
+  const router = useRouter();
+  const {currentUser} = useUser()
+
   return (
-    <TableRow>
+    <TableRow onClick={() => router.push('/workspaces/' + data.id)} className="cursor-pointer">
       <TableCell className="font-medium">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -36,8 +44,8 @@ function WorkspaceRow({ data }: { data: WorkspaceTableProps }) {
         </svg>
       </TableCell>
       <TableCell className="font-medium">{data.name}</TableCell>
-      <TableCell>{data.owner}</TableCell>
-      <TableCell>{data.editedDate}</TableCell>
+      <TableCell>{(data.ownerId === currentUser?.id) ? "me" : data.ownerId}</TableCell>
+      <TableCell>{data.createdAt.toLocaleString()}</TableCell>
       <TableCell className="text-right">
         <Dropdown2 />
       </TableCell>
@@ -45,10 +53,10 @@ function WorkspaceRow({ data }: { data: WorkspaceTableProps }) {
   );
 }
 
-export function WorkspaceTable({ data }: { data: WorkspaceTableProps[] }) {
+export function WorkspaceTable({ data }: { data: Workspace[] }) {
   return (
     <Table>
-      <TableCaption>Your recent workspace</TableCaption>
+      {/* <TableCaption>Your recent workspace</TableCaption> */}
       <TableHeader>
         <TableRow>
           <TableHead></TableHead>

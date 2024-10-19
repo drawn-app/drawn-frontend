@@ -1,11 +1,11 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { ChatInput } from "../ui/chat/chat-input";
-import { Button } from "../ui/button";
+import { ChatInput } from "../../ui/chat/chat-input";
+import { Button } from "../../ui/button";
 import { BotIcon, CornerDownLeft, DeleteIcon, Icon, Trash2 } from "lucide-react";
-import { ChatMessageList } from "../ui/chat/chat-message-list";
-import { ChatBubble, ChatBubbleAction, ChatBubbleAvatar, ChatBubbleMessage } from "../ui/chat/chat-bubble";
+import { ChatMessageList } from "../../ui/chat/chat-message-list";
+import { ChatBubble, ChatBubbleAction, ChatBubbleAvatar, ChatBubbleMessage } from "../../ui/chat/chat-bubble";
 
 export default function ChatPane() {
 

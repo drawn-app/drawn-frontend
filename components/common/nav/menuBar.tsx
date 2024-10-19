@@ -1,6 +1,7 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { useUser } from "@/lib/hooks/UserContext";
+import { LogOut, User } from "lucide-react";
 
 export default function MenuBar() {
 
@@ -9,7 +10,6 @@ export default function MenuBar() {
     if (isLoading || !currentUser) return null
 
     return (
-
         <DropdownMenu>
             <DropdownMenuTrigger>
                 <Avatar>
@@ -20,8 +20,14 @@ export default function MenuBar() {
             <DropdownMenuContent>
                 <DropdownMenuLabel>{currentUser.displayName}</DropdownMenuLabel>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem>Profile</DropdownMenuItem>
-                <DropdownMenuItem>Logout</DropdownMenuItem>
+                <DropdownMenuItem className="gap-3">
+                    <User size={20}/>
+                    <span>Profile</span>
+                </DropdownMenuItem>
+                <DropdownMenuItem className="gap-3">
+                    <LogOut size={20}/>
+                    <span>Logout</span>
+                </DropdownMenuItem>
             </DropdownMenuContent>
         </DropdownMenu>
         

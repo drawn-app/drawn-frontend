@@ -1,4 +1,4 @@
-import ChatPane from "@/components/common/chatPane";
+import ChatPane from "@/components/common/chat/chatPane";
 import Whiteboard from "@/components/common/whiteboard";
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "@/components/ui/resizable";
 import WorkspaceNavBar from "@/components/workspaces/workspaceNavBar";

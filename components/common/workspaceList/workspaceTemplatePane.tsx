@@ -1,5 +1,5 @@
-import WorkspaceTemplateList from "@/components/common/workspaceTemplateList";
-import { WorkspaceTemplateListProps } from "@/components/common/workspaceTemplateList"; // Import the interface if defined elsewhere
+import WorkspaceTemplateList from "@/components/common/workspaceList/workspaceTemplateList";
+import { WorkspaceTemplateListProps } from "@/components/common/workspaceList/workspaceTemplateList"; // Import the interface if defined elsewhere
 import { DropDown1 } from "@/components/common/dropDown1";
 
 export default async function WorkspaceTemplatePane() {

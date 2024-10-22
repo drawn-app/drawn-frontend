@@ -1,6 +1,12 @@
+"use client";
+
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
+import { useEffect } from "react";
+import { UserProvider } from "@/lib/hooks/UserContext";
+import { Toaster } from "@/components/ui/toaster";
+import { StorageProvider } from "@/lib/hooks/StorageContext";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -13,23 +19,33 @@ const geistMono = localFont({
   weight: "100 900",
 });
 
-export const metadata: Metadata = {
-  title: "Drawn",
-  description: "Collaboration Web App",
-};
+// export const metadata: Metadata = {
+//   title: "Drawn",
+//   description: "Collaboration Web App",
+// };
 
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
+  useEffect(() => {
+    console.log("From layout")
+  }, [])
+
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {children}
-      </body>
+      <UserProvider>
+        <StorageProvider>
+          <body
+            className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+          >
+            {children}
+            <Toaster />
+          </body>
+        </StorageProvider>
+      </UserProvider>
     </html>
   );
 }

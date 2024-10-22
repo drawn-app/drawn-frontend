@@ -1,5 +1,5 @@
 import FeatureCards from "@/components/common/featureCards";
-import NavigationBar from "@/components/common/navigationBar";
+import NavigationBar from "@/components/common/nav/navigationBar";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 

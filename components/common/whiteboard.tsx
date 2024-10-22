@@ -17,9 +17,9 @@ export default function Whiteboard() {
         <div className="w-full h-full">
             <Excalidraw 
                 excalidrawAPI={(api) => setExcalidrawAPI(api)}
-                onChange={(excalidrawElements, appState, files) => {
-                    updateElements(excalidrawElements)
-                }}    
+                // onChange={(excalidrawElements, appState, files) => {
+                //     updateElements(excalidrawElements)
+                // }}    
             />
         </div>
     )

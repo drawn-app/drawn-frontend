@@ -4,10 +4,24 @@ import { useUser } from "@/lib/hooks/UserContext";
 import { LogOut, User } from "lucide-react";
 
 export default function MenuBar() {
-
     const {isLoading, currentUser} = useUser()
 
     if (isLoading || !currentUser) return null
+
+    async function logout() {
+        try {
+            const response = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + '/auth/logout', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                credentials: 'include'
+            })
+            window.location.href = "/"
+        } catch (err) {
+            window.location.href = "/"
+        }
+    }
 
     return (
         <DropdownMenu>
@@ -24,7 +38,7 @@ export default function MenuBar() {
                     <User size={20}/>
                     <span>Profile</span>
                 </DropdownMenuItem>
-                <DropdownMenuItem className="gap-3">
+                <DropdownMenuItem className="gap-3" onClick={() => logout()}>
                     <LogOut size={20}/>
                     <span>Logout</span>
                 </DropdownMenuItem>

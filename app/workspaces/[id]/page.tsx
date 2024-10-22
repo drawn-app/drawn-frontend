@@ -5,7 +5,7 @@ import Whiteboard from "@/components/common/whiteboard";
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "@/components/ui/resizable";
 import WorkspaceNavBar from "@/components/workspaces/workspaceNavBar";
 import { useUser } from "@/lib/hooks/UserContext";
-import { Workspace } from "@/types/Workspace";
+import { Workspace, WorkspaceFullData } from "@/types/Workspace";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -14,7 +14,7 @@ export default function WorkspacePage() {
     const router = useRouter()
     const {isLoading, currentUser} = useUser()
 
-    const [workspace, setWorkspace] = useState<Workspace | null>(null)
+    const [workspace, setWorkspace] = useState<WorkspaceFullData | null>(null)
 
     async function getWorkspace() {
         const res = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + "/workspaces/" + params.id, {

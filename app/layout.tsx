@@ -6,6 +6,7 @@ import "./globals.css";
 import { useEffect } from "react";
 import { UserProvider } from "@/lib/hooks/UserContext";
 import { Toaster } from "@/components/ui/toaster";
+import { StorageProvider } from "@/lib/hooks/StorageContext";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -36,12 +37,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       <UserProvider>
-        <body
-          className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-        >
-          {children}
-        </body>
-        <Toaster />
+        <StorageProvider>
+          <body
+            className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+          >
+            {children}
+            <Toaster />
+          </body>
+        </StorageProvider>
       </UserProvider>
     </html>
   );

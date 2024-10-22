@@ -54,7 +54,7 @@ export default function RegisterPage() {
       credentials : 'include',
     });
     if (result.ok) {
-      router.push('/workspaces')
+      window.location.href = "/workspaces"
     } else {
       alert("This email is already registered")
     }

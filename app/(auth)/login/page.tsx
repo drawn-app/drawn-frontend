@@ -47,7 +47,7 @@ export default function LoginPage() {
       credentials : 'include',
     });
     if (result.ok) {
-      router.push('/workspaces')
+      window.location.href = "/workspaces"
     } else {
       alert("Invalid email or password")
     }

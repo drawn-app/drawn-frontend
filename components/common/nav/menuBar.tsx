@@ -2,9 +2,11 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { useUser } from "@/lib/hooks/UserContext";
 import { LogOut, User } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 export default function MenuBar() {
     const {isLoading, currentUser} = useUser()
+    const router = useRouter()
 
     if (isLoading || !currentUser) return null
 
@@ -34,7 +36,7 @@ export default function MenuBar() {
             <DropdownMenuContent>
                 <DropdownMenuLabel>{currentUser.displayName}</DropdownMenuLabel>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem className="gap-3">
+                <DropdownMenuItem className="gap-3" onClick={() => router.push('/profile')}>
                     <User size={20}/>
                     <span>Profile</span>
                 </DropdownMenuItem>

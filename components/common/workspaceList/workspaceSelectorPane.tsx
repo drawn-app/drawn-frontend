@@ -5,6 +5,8 @@ import { WorkspaceTableProps } from "@/components/common/workspaceList/workspace
 import CreateWorkspaceDialog from "./createWorkspaceDialog";
 import { useEffect, useState } from "react";
 import { Workspace } from "@/types/Workspace";
+import { Button } from "@/components/ui/button";
+import { RefreshCcw } from "lucide-react";
 
 export default function WorkspaceSelectorPane() {
 
@@ -36,11 +38,14 @@ export default function WorkspaceSelectorPane() {
             Recent workspace
           </h2>
           <div className="flex gap-5">
+            <Button variant="outline" onClick={fetchData}>
+              <RefreshCcw className="h-4 w-4" />
+            </Button>
             <CreateWorkspaceDialog />
           </div>
         </div>
         <div className="flex flex-row px-4">
-          <WorkspaceTable data={data} />
+          <WorkspaceTable data={data} refresh={fetchData} />
         </div>
       </div>
     </div>

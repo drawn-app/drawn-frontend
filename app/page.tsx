@@ -16,7 +16,7 @@ export default function Home() {
           <p className="text-xl text-white mb-8">
             Unleash your creativity with our powerful drawing tools.
           </p>
-          <Link href="/register">
+          <Link href="/workspaces">
             <Button className="bg-white text-indigo-600 hover:bg-gray-100">
               Get Started
             </Button>
@@ -31,7 +31,7 @@ export default function Home() {
           <h2 className="text-4xl font-bold mb-6 text-gray-800">
             Ready to Start Drawing?
           </h2>
-          <Link href="/register">
+          <Link href="/workspaces">
             <Button className="bg-indigo-600 text-white hover:bg-indigo-500">
               Start Now
             </Button>

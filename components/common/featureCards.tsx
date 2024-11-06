@@ -57,11 +57,11 @@ export default function FeatureCards() {
         <Card>
           <CardHeader>
             <FileSearch className="h-12 w-12 text-purple-600" />
-            <h3 className="text-lg font-bold mt-4">Version Control</h3>
+            <h3 className="text-lg font-bold mt-4">Unlimited Workspaces</h3>
           </CardHeader>
           <CardContent>
             <p className="text-gray-600">
-              Track change history and revert to the former versions of the diagram.
+              Create as many workspaces as you want and work on multiple projects.
             </p>
           </CardContent>
         </Card>

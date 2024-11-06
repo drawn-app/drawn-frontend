@@ -31,7 +31,7 @@ export default function RootLayout({
 }>) {
 
   useEffect(() => {
-    console.log("From layout")
+    window.document.title = "Drawn"
   }, [])
 
   return (

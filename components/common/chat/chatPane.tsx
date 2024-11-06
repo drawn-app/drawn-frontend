@@ -12,12 +12,14 @@ import { useToast } from "@/hooks/use-toast";
 import { ChatMessage, ReceiveChatMessage } from "@/types/ChatMessage";
 import { useUser } from "@/lib/hooks/UserContext";
 import { useStorage } from "@/lib/hooks/StorageContext";
+import DeleteMessageDialog from "./deleteMessageDialog";
+import EditMessageDialog from "./editMessageDialog";
 
-export default function ChatPane() {
+export default function ChatPane({ viewing=false }: { viewing?: boolean }) {
     const params = useParams<{ id: string }>()
     const { toast } = useToast()
     const { currentUser } = useUser()
-    const { userFetchStorage, batchFetchUsers } = useStorage()
+    const { userFetchStorage, batchFetchUsers, getUser } = useStorage()
 
     const initialized = useRef<boolean>(false)
 
@@ -68,11 +70,27 @@ export default function ChatPane() {
             if (data.action === "CREATE") {
                 setMessages((messages) => [...messages, data.message])
             } else if (data.action === "UPDATE") {
-                // TODO: Implement update
+                editMessageFromArray(data.message.id, data.message.text)
             } else if (data.action === "DELETE") {
-                // TODO: Implement delete
+                deleteMessageFromArray(data.message.id)
             }
         }
+    }
+
+    async function deleteMessageFromArray(messageId: string) {
+        setMessages(messages.filter((message) => message.id !== messageId))
+    }
+
+    async function editMessageFromArray(messageId: string, text: string) {
+        setMessages(messages.map((message) => {
+            if (message.id === messageId) {
+                return {
+                    ...message,
+                    text: text
+                }
+            }
+            return message
+        }))
     }
 
     async function sendMessage() {
@@ -124,7 +142,7 @@ export default function ChatPane() {
                         {
                             messages.map((message, index) => (
                                 <ChatBubble
-                                    key={index}
+                                    key={message.id}
                                     variant={(message.userId === currentUser?.id) ? "sent" : "received"}
                                 //   variant={message.role == "user" ? "sent" : "received"}
                                 
@@ -134,18 +152,14 @@ export default function ChatPane() {
                                       src={(message.userId === currentUser?.id) ? currentUser?.avatar : userFetchStorage.get(message.userId)?.avatar}
                                       fallback={(message.userId === currentUser?.id) ? "👨🏽" : "🤖"}
                                     />
-                                    <ChatBubbleMessage>
-                                        <span className="text-sm">{message.text}</span>
+                                    <ChatBubbleMessage className="gap-3">
+                                        <div className="text-sm font-semibold">{(message.userId === currentUser?.id) ? currentUser?.displayName : getUser(message.userId)?.displayName || ""}</div>
+                                        <div className="text-xs">{new Date(message.createdAt).toLocaleString()}</div>
+                                        <div className="text-sm">{message.text}</div>
                                         {(message.userId === currentUser?.id) && (
                                             <div className="flex items-center mt-1.5 gap-1">
-                                                <ChatBubbleAction
-                                                    variant="outline"
-                                                    className="size-6"
-                                                    icon={<Trash2 className="size-4" />}
-                                                    onClick={() =>
-                                                      alert("Not implemented yet")
-                                                    }
-                                                />
+                                                <DeleteMessageDialog messageId={message.id} refresh={() => deleteMessageFromArray(message.id)} />
+                                                <EditMessageDialog message={message} refresh={editMessageFromArray} />
                                             </div>
                                         )}
                                     </ChatBubbleMessage>
@@ -160,8 +174,9 @@ export default function ChatPane() {
                     <ChatInput
                         value={inputMessage}
                         onChange={(e) => setInputMessage(e.target.value)}
-                        placeholder="Type your message here..."
+                        placeholder={(viewing) ? "You don't have permission to send message" : "Type your message here..."}
                         className="max-h-12 min-h-12 h-12 px-2 py-2 resize-none rounded-lg bg-background shadow-none"
+                        disabled={viewing}
                     />
                     <Button
                         disabled={!inputMessage}

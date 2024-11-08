@@ -8,6 +8,7 @@ import { set } from "react-hook-form";
 import { boolean } from "zod";
 import { useParams } from "next/navigation";
 import { streamingFetch, streamingLongResponseFetching } from "@/lib/streaming";
+import { User } from "@/types/User";
 //import { Excalidraw } from "@excalidraw/excalidraw";
 const Excalidraw = dynamic(
     async () => (await import("@excalidraw/excalidraw")).Excalidraw,
@@ -26,12 +27,13 @@ type ExcalidrawAction = {
     data: ExcalidrawElement[] | BinaryFileData;
 }
 
-export default function Whiteboard() {
+export default function Whiteboard({viewMode,setUsers} : {viewMode: boolean, setUsers: (userList: User[]) => void}) {
 
     const params = useParams<{ id: string }>();
     const [excalidrawAPI, setExcalidrawAPI] = useState<ExcalidrawImperativeAPI>();
     const clientElement = useRef<ExcalidrawElement[]>([]);
     const previousFiles = useRef<BinaryFiles>({});
+    
     const isReceived = useRef<boolean>(false);
     function updateElements(elements: readonly ExcalidrawElement[]) {
         const cloneElements = elements.map((element) => ({...element}));
@@ -67,7 +69,35 @@ export default function Whiteboard() {
                             data: JSON.parse(data.data)
                         };
                         excuteAction(action);
-                    } else{
+                    } else if (data.action === "UPDATE_CONNECTION"){
+                        const userIdList: string[] = JSON.parse(data.data);
+                        const userList: User[] = await Promise.all(userIdList.map(async (userId) => {
+                            const response = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + "/users/" + userId, {
+                                method: 'GET',
+                                credentials: 'include',
+                            });
+                            if (response.ok) {
+                                const data = await response.json();
+                                return data;
+                            }
+                            return null;
+                        }));
+                        // sort by display name
+                        
+                        userList.sort((a, b) => {
+                            if (a.displayName < b.displayName) {
+                                return -1;
+                            }
+                            if (a.displayName > b.displayName) {
+                                return 1;
+                            }
+                            return 0;
+                        });
+                         
+                        setUsers(userList);
+                        console.log(`User list: ${userIdList}`);
+                    } 
+                    else{
                         console.log(data.action);
                         console.log("Invalid action");
                     }
@@ -291,20 +321,21 @@ export default function Whiteboard() {
     }
 
     useEffect(() => {
-        if (excalidrawAPI){
+        if (excalidrawAPI) {
             joinCollaborative();
             // excalidrawAPI.onPointerUp(() => {
             //     if (isUpdate.current) {
             //         sendUpdateToServer();
             //     }
             // });
-            InitializeWhiteBoard();
+            InitializeWhiteBoard(); //
         }
-    },[excalidrawAPI])
+    },[excalidrawAPI]);
     return (
         <div className="w-full h-full">
             <Excalidraw 
                 excalidrawAPI={(api) => setExcalidrawAPI(api)}
+                 viewModeEnabled={viewMode}
                  onChange={(excalidrawElements, appState, files) => {
                      if (!isSameElement(excalidrawElements, clientElement.current) && !appState.draggingElement) {
                         const excalidrawAction = getAction(clientElement.current, excalidrawElements);

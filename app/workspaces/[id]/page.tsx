@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "@/components/ui/resizable";
 import WorkspaceNavBar from "@/components/workspaces/workspaceNavBar";
 import { useUser } from "@/lib/hooks/UserContext";
+import { User } from "@/types/User";
 import { Workspace, WorkspaceFullData } from "@/types/Workspace";
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
@@ -23,6 +24,8 @@ export default function WorkspacePage() {
     const initFetchRef = useRef<boolean>(true)
 
     const [permission, setPermission] = useState<string>("viewer")
+
+    const [users, setUsers] = useState<User[]>([]);
 
     async function getWorkspace() {
         const permission = await enterWorkspace()
@@ -82,10 +85,10 @@ export default function WorkspacePage() {
 
     return (
         <div className="unpadding-page">
-            <WorkspaceNavBar data={workspace} />
+            <WorkspaceNavBar data={workspace} userList={users}/>
             <ResizablePanelGroup direction="horizontal" className="w-full h-[calc(100vh-4rem)]">
                 <ResizablePanel defaultSize={70} maxSize={90} minSize={50} className="h-[calc(100vh-4rem)]">
-                    <Whiteboard />
+                    <Whiteboard viewMode={permission === "viewer"} setUsers={setUsers}/>
                 </ResizablePanel>
                 <ResizableHandle />
                 <ResizablePanel defaultSize={30} maxSize={50} minSize={10} className="h-[calc(100vh-4rem)]">

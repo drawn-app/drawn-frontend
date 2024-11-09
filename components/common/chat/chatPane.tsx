@@ -78,11 +78,11 @@ export default function ChatPane({ viewing=false }: { viewing?: boolean }) {
     }
 
     async function deleteMessageFromArray(messageId: string) {
-        setMessages(messages.filter((message) => message.id !== messageId))
+        setMessages(messages => messages.filter((message) => message.id !== messageId))
     }
 
     async function editMessageFromArray(messageId: string, text: string) {
-        setMessages(messages.map((message) => {
+        setMessages(messages => messages.map((message) => {
             if (message.id === messageId) {
                 return {
                     ...message,

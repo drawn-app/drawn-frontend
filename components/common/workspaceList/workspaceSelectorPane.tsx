@@ -6,7 +6,7 @@ import CreateWorkspaceDialog from "./createWorkspaceDialog";
 import { useEffect, useState } from "react";
 import { Workspace } from "@/types/Workspace";
 import { Button } from "@/components/ui/button";
-import { RefreshCcw } from "lucide-react";
+import { ArrowDownAZ, ArrowUpZA, ClockArrowDown, ClockArrowUp, RefreshCcw } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useStorage } from "@/lib/hooks/StorageContext";
@@ -67,13 +67,33 @@ export default function WorkspaceSelectorPane() {
             <SelectContent>
               <SelectGroup>
                 <SelectLabel>Date</SelectLabel>
-                <SelectItem value="date_asc">Date - ASC</SelectItem>
-                <SelectItem value="date_desc">Date - DESC</SelectItem>
+                <SelectItem value="date_asc">
+                  <div className="flex gap-2 items-center">
+                    <ClockArrowUp size={15} />
+                    <span>Date - Oldest</span>
+                  </div>
+                </SelectItem>
+                <SelectItem value="date_desc">
+                  <div className="flex gap-2 items-center">
+                    <ClockArrowDown size={15} />
+                    <span>Date - Newest</span>
+                  </div>
+                </SelectItem>
               </SelectGroup>
               <SelectGroup>
                 <SelectLabel>Name</SelectLabel>
-                <SelectItem value="name_asc">Name - ASC</SelectItem>
-                <SelectItem value="name_desc">Name - DESC</SelectItem>
+                <SelectItem value="name_asc">
+                  <div className="flex gap-2 items-center">
+                    <ArrowDownAZ size={15} />
+                    <span>Name - ASC</span>
+                  </div>
+                </SelectItem>
+                <SelectItem value="name_desc">
+                  <div className="flex gap-2 items-center">
+                    <ArrowUpZA size={15} />
+                    <span>Name - DESC</span>
+                  </div>
+                </SelectItem>
               </SelectGroup>
             </SelectContent>
           </Select>

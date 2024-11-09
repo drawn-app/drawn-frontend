@@ -53,7 +53,7 @@ function WorkspaceRow({ data, refresh }: { data: Workspace, refresh: () => void 
       <TableCell onClick={() => router.push('/workspaces/' + data.id)}>{new Date(data.createdAt).toLocaleString()}</TableCell>
       <TableCell className="text-right flex items-center">
         {
-          (data.ownerId === currentUser?.id) && (
+          (data.ownerId === currentUser?.id || currentUser?.role === "admin") && (
             <>
               <EditWorkspaceDialog workspaceData={data} refresh={refresh} />
               <DeleteWorkspceDialog workspaceId={data.id} refresh={refresh} />

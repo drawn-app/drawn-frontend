@@ -6,8 +6,10 @@ import ShareDialog from "../common/workspace/share/shareDialog";
 import { useUser } from "@/lib/hooks/UserContext";
 import { Button } from "../ui/button";
 import Link from "next/link";
+import { User } from "@/types/User";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 
-export default function WorkspaceNavBar({ data }: { data: WorkspaceFullData }) {
+export default function WorkspaceNavBar({ data, userList }: { data: WorkspaceFullData , userList: User[] }) {
     const { currentUser } = useUser()
 
     return (
@@ -22,6 +24,15 @@ export default function WorkspaceNavBar({ data }: { data: WorkspaceFullData }) {
                         )
                     }
                 </div>
+            </div>
+            
+            <div className="flex gap-2">
+                {userList.map((user) => (
+                    <Avatar>
+                        <AvatarImage src={user.avatar} alt="Avatar" width={20} height={20} className="object-cover" />
+                        <AvatarFallback>{user.displayName.charAt(0)}</AvatarFallback>
+                    </Avatar>
+                ))}
             </div>
             <div className="flex items-center gap-5">
                 {

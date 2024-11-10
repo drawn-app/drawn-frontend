@@ -9,11 +9,10 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 
 export default function Workspaces() {
-  const searchParams = useSearchParams()
   const { isLoading, currentUser } = useUser()
   const router = useRouter()
 
-  const [tab, setTab] = useState(searchParams.get("tab") || "workspaces")
+  const [tab, setTab] = useState("workspaces")
 
   if (isLoading) return null
   if (!currentUser) {

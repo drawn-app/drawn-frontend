@@ -217,9 +217,11 @@ export default function Whiteboard({viewMode,setUsers} : {viewMode: boolean, set
     function getAction(previousElements: readonly ExcalidrawElement[], currentElements: readonly ExcalidrawElement[]) : ExcalidrawAction | null {
         if (previousElements.length < currentElements.length) {
             // can have multiple add element
+            const previousId = new Set<String>(previousElements.map(element => element.id));
+            const addedElements = currentElements.filter(element => !previousId.has(element.id));
             return {
                 action : "ADD_ELEMENT",
-                data : currentElements.slice(previousElements.length)
+                data : addedElements,
             }
         } else {
 
@@ -357,6 +359,7 @@ export default function Whiteboard({viewMode,setUsers} : {viewMode: boolean, set
                         }
                     
                     }
+                   
                     // debouning
                     
                     

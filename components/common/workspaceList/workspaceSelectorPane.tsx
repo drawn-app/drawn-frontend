@@ -32,6 +32,7 @@ export default function WorkspaceSelectorPane() {
 
     const data: Workspace[] = await response.json();
     setData(data);
+    await batchFetchUsers(data.map((workspace) => workspace.ownerId));
   }
   
   useEffect(() => {

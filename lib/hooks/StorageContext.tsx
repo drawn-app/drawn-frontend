@@ -21,9 +21,14 @@ export const StorageProvider = ({children} : {children : React.ReactNode}) => {
     const [userFetchStorage, setUserFetchStorage] = useState<Map<string, User>>(new Map<string, User>());
 
     const updateUserFetchStorage = (key: string, value: User) => {
-        const newMap = new Map<string, User>(userFetchStorage);
-        newMap.set(key, value);
-        setUserFetchStorage(newMap);
+        // const newMap = new Map<string, User>(userFetchStorage);
+        // newMap.set(key, value);
+        // setUserFetchStorage(newMap);
+        setUserFetchStorage((prev) => {
+            var newMap = new Map<string, User>(prev);
+            newMap.set(key, value);
+            return newMap;
+        });
     }
 
     const fetchUser = async (id: string) => {

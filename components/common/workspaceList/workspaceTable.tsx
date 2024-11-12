@@ -49,7 +49,8 @@ function WorkspaceRow({ data, refresh }: { data: Workspace, refresh: () => void 
         <div className="text-2xl">📒</div>
       </TableCell>
       <TableCell onClick={() => router.push('/workspaces/' + data.id)} className="font-medium">{data.name}</TableCell>
-      <TableCell onClick={() => router.push('/workspaces/' + data.id)}>{(data.ownerId === currentUser?.id) ? "me" : getUser(data.ownerId)?.displayName || ""}</TableCell>
+      {/* <TableCell onClick={() => router.push('/workspaces/' + data.id)}>{(data.ownerId === currentUser?.id) ? "me" : getUser(data.ownerId)?.displayName || ""}</TableCell> */}
+      <TableCell onClick={() => router.push('/workspaces/' + data.id)}>{(data.ownerId === currentUser?.id) ? "me" : userFetchStorage.get(data.ownerId)?.displayName || ""}</TableCell>
       <TableCell onClick={() => router.push('/workspaces/' + data.id)}>{new Date(data.createdAt).toLocaleString()}</TableCell>
       <TableCell className="text-right flex items-center">
         {

@@ -27,6 +27,7 @@ export default function RecentWorkspaceSelectorPane() {
 
     const data: {latestView: Date, workspace: Workspace}[] = await response.json();
     setData(data);
+    await batchFetchUsers(data.map((workspace) => workspace.workspace.ownerId));
   }
   
   useEffect(() => {
